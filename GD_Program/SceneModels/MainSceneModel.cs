@@ -1,7 +1,11 @@
-﻿using GD_Extension.Utils;
-using GD_Program.Interfaces;
+﻿using Bogus;
+using GD_Extension.Interfaces;
+using GD_Extension.Utils;
+using GD_Program.DB;
+using GD_Program.Models;
 using GD_Program.Services;
 using Godot;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,13 +16,17 @@ namespace GD_Program.SceneModels
 {
     public class MainSceneModel : ISceneModel
     {
-
+        private NlogHelper nlogHelper;
         private TestService testService;
 
         private TestUtils testUtils = new TestUtils();
-        public MainSceneModel(TestService testService)
+        private FreeSqlHelper freeSqlHelper;
+        
+        public MainSceneModel(TestService testService,NlogHelper nlogHelper,FreeSqlHelper freeSqlHelper)
         {
             this.testService = testService;
+            this.nlogHelper = nlogHelper;
+            this.freeSqlHelper = freeSqlHelper;
         }
         public override void Process(double delta)
         {
@@ -29,8 +37,31 @@ namespace GD_Program.SceneModels
         {
             GD.Print("Hello Godot!");
             //在Ready中测试IOC
-            testService.Test();
-            testUtils.Test();
+            //testService.Test();
+            //testUtils.Test();
+            //以匿名对象为例
+
+            //以构造器为例
+
+            var isConnect = freeSqlHelper.SqliteDb.Ado.ExecuteConnectTest(10);
+            GD.Print($"数据库连接状态:[{isConnect}]");
+
+            var insertLists = new T_Person().FakeMany(10);
+
+
+            var insertName = freeSqlHelper.SqliteDb.Insert(insertLists).ExecuteAffrows();
+            GD.Print($"数据库插入[{insertName}]行数据");
+
+            var selectLists = freeSqlHelper.SqliteDb.Queryable<T_Person>().OrderByDescending(t=>t.Id).Take(10).ToList();
+
+            foreach (var item in selectLists)
+            {
+                GD.Print(JsonConvert.SerializeObject(item));
+            }
+            //nlogHelper.Debug("Debug");
+            //nlogHelper.Info("Info");
+            //nlogHelper.Warning("Warning");
+            //nlogHelper.Error("Error");
         }
     }
 }

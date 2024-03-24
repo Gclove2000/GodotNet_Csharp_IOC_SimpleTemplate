@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GD_Program.Interfaces
+namespace GD_Extension_4_2_1_011.Interfaces
 {
     /// <summary>
     /// SceneModel的基类

@@ -1,4 +1,5 @@
-﻿using GD_Program.SceneModels;
+﻿using GD_Extension.Utils;
+using GD_Program.SceneModels;
 using GD_Program.Services;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -27,6 +28,8 @@ namespace GD_Program
         public static void AddServices(ServiceCollection builder)
         {
             builder.AddSingleton<TestService>();
+            builder.AddSingleton<NlogHelper>();
+            builder.AddSingleton<FreeSqlHelper>();
         }
         /// <summary>
         /// 添加SceneModel，应以Transient添加
