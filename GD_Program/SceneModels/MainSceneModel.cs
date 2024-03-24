@@ -41,6 +41,14 @@ namespace GD_Program.SceneModels
             //testUtils.Test();
             //以匿名对象为例
 
+            //var stu = new MyStudent().FakeMany(10).ToList();
+
+            //stu.ForEach(item =>
+            //{
+            //    nlogHelper.Debug(JsonConvert.SerializeObject(item));
+
+            //});
+
             //以构造器为例
 
             var isConnect = freeSqlHelper.SqliteDb.Ado.ExecuteConnectTest(10);
@@ -51,17 +59,15 @@ namespace GD_Program.SceneModels
 
             var insertName = freeSqlHelper.SqliteDb.Insert(insertLists).ExecuteAffrows();
             GD.Print($"数据库插入[{insertName}]行数据");
-
-            var selectLists = freeSqlHelper.SqliteDb.Queryable<T_Person>().OrderByDescending(t=>t.Id).Take(10).ToList();
-
+            GD.Print("数据库查询");
+            var selectLists = freeSqlHelper.SqliteDb.Queryable<T_Person>()
+                .OrderByDescending(t => t.Id)
+                .Take(10)
+                .ToList();
             foreach (var item in selectLists)
             {
                 GD.Print(JsonConvert.SerializeObject(item));
             }
-            //nlogHelper.Debug("Debug");
-            //nlogHelper.Info("Info");
-            //nlogHelper.Warning("Warning");
-            //nlogHelper.Error("Error");
         }
     }
 }
