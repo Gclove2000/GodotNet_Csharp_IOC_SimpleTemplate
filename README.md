@@ -41,3 +41,4 @@ GD_Extension_4_2_1_01.zip就是我导出的项目模板了，直接导入到即�
 C:\Users\xxx(你的用户名)\Documents\Visual Studio 2022\Templates\ProjectTemplates
 ```
 
+GodotProgram_4_2_1_1.zip这个文件，我感觉这个设计的更加好了。因为我之前想设置三层项目，现在想想两层应该也够用了。
